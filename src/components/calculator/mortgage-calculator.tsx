@@ -396,7 +396,7 @@ export default function MortgageCalculator() {
 
       <div className="lg:col-span-3 space-y-8">
         {!result && (
-             <Card className="h-full flex flex-col justify-center items-center text-center">
+             <Card className="h-full flex flex-col justify-center items-center text-center p-6">
                  <CardHeader>
                      <CardTitle>Your Mortgage Details</CardTitle>
                      <CardDescription>Results will appear here after calculation.</CardDescription>
@@ -415,8 +415,7 @@ export default function MortgageCalculator() {
                     <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                              <h3 className="text-lg font-semibold mb-4 text-center">Monthly Breakdown</h3>
-                            <div className="w-full h-64">
-                            <ChartContainer config={chartConfig} className="mx-auto aspect-square h-full">
+                            <ChartContainer config={chartConfig} className="mx-auto aspect-square h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
                                         <ChartTooltip content={<ChartTooltipContent nameKey="name" />} />
@@ -427,7 +426,6 @@ export default function MortgageCalculator() {
                                     </PieChart>
                                 </ResponsiveContainer>
                             </ChartContainer>
-                            </div>
                             <div className="space-y-2 mt-4 text-sm">
                                 <div className="flex justify-between"><span>Principal & Interest:</span> <strong>{formatCurrency(result.monthlyPayment)}</strong></div>
                                 <div className="flex justify-between"><span>Property Tax:</span> <strong>{formatCurrency(result.monthlyPropertyTax)}</strong></div>
@@ -506,5 +504,3 @@ export default function MortgageCalculator() {
     </div>
   );
 }
-
-    

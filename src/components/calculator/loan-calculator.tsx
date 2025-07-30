@@ -235,7 +235,7 @@ export default function LoanCalculator() {
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-      <TabsList className="grid w-full grid-cols-3">
+      <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3">
         <TabsTrigger value="amortized">Amortized Loan</TabsTrigger>
         <TabsTrigger value="deferred">Deferred Payment Loan</TabsTrigger>
         <TabsTrigger value="bond">Bond-Based Loan</TabsTrigger>
