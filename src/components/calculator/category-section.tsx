@@ -34,6 +34,12 @@ const categories = [
         icon: <BarChartBig className="h-8 w-8 text-primary" />,
       },
       {
+        title: "Compound Interest Calculator",
+        description: "Convert interest rates.",
+        href: "/compound-interest-calculator",
+        icon: <Banknote className="h-8 w-8 text-primary" />,
+      },
+      {
         title: "Investment Calculator",
         description: "Calculate investment returns.",
         href: "/investment-calculator",
