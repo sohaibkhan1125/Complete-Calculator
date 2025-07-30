@@ -14,5 +14,6 @@ export {
     PiggyBank,
     Receipt,
     Briefcase,
-    CircleDollarSign
+    CircleDollarSign,
+    TrendingUp
 } from "lucide-react";

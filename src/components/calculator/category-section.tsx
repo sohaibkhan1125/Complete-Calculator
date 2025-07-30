@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -32,6 +32,12 @@ const categories = [
         description: "Compound interest growth.",
         href: "/interest-calculator",
         icon: <BarChartBig className="h-8 w-8 text-primary" />,
+      },
+      {
+        title: "Interest Rate Calculator",
+        description: "Solve for the interest rate (APR).",
+        href: "/interest-rate-calculator",
+        icon: <TrendingUp className="h-8 w-8 text-primary" />,
       },
       {
         title: "Compound Interest Calculator",
