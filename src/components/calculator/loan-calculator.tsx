@@ -260,7 +260,7 @@ export default function LoanCalculator() {
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField control={amortizedForm.control} name="loanTermYears" render={({ field }) => (
                           <FormItem>
                             <FormLabel>Loan Term (Years)</FormLabel>
@@ -358,7 +358,7 @@ export default function LoanCalculator() {
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField control={deferredForm.control} name="loanTermYears" render={({ field }) => (
                           <FormItem>
                             <FormLabel>Loan Term (Years)</FormLabel>
@@ -447,7 +447,7 @@ export default function LoanCalculator() {
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField control={bondForm.control} name="loanTermYears" render={({ field }) => (
                           <FormItem>
                             <FormLabel>Loan Term (Years)</FormLabel>
