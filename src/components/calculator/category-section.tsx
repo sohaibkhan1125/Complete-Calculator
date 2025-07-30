@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -117,9 +117,15 @@ const categories = [
           description: "Estimate your total body fat.",
           href: "/body-fat-calculator",
           icon: <PersonStanding className="h-8 w-8 text-primary" />,
-      }
+        },
+        {
+          title: "BMR Calculator",
+          description: "Estimate your Basal Metabolic Rate.",
+          href: "/bmr-calculator",
+          icon: <BrainCircuit className="h-8 w-8 text-primary" />,
+        }
     ],
-    placeholders: 1,
+    placeholders: 0,
   },
   {
     title: "Math Calculators",

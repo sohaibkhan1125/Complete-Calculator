@@ -18,5 +18,6 @@ export {
     TrendingUp,
     Scale,
     Utensils,
-    PersonStanding
+    PersonStanding,
+    BrainCircuit
 } from "lucide-react";
