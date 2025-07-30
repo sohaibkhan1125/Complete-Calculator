@@ -16,5 +16,6 @@ export {
     Briefcase,
     CircleDollarSign,
     TrendingUp,
-    Scale
+    Scale,
+    Utensils
 } from "lucide-react";
