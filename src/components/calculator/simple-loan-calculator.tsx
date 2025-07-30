@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ChartContainer,
   ChartTooltip,
@@ -32,30 +31,20 @@ import Link from "next/link";
 
 const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
 
-const fixedTermSchema = z.object({
+const loanSchema = z.object({
   loanAmount: z.coerce.number().min(1, "Loan amount is required."),
-  loanTermYears: z.coerce.number().min(0, "Loan term is required.").default(15),
+  loanTermYears: z.coerce.number().min(0).default(15),
+  loanTermMonths: z.coerce.number().min(0).default(0),
   interestRate: z.coerce.number().min(0, "Interest rate is required.").default(6),
+}).refine(data => data.loanTermYears > 0 || data.loanTermMonths > 0, {
+    message: "Loan term must be greater than 0.",
+    path: ["loanTermYears"],
 });
 
-const fixedPaymentSchema = z.object({
-  loanAmount: z.coerce.number().min(1, "Loan amount is required."),
-  monthlyPayment: z.coerce.number().min(1, "Monthly payment is required."),
-  interestRate: z.coerce.number().min(0, "Interest rate is required."),
-});
 
 type AmortizationData = { year: number; month: number; date: string; interest: number; principal: number; balance: number };
-type FixedTermResult = {
+type LoanResult = {
   monthlyPayment: number;
-  totalPayment: number;
-  totalInterest: number;
-  amortizationData: AmortizationData[];
-};
-
-type FixedPaymentResult = {
-  totalMonths: number;
-  totalYears: number;
-  remainingMonths: number;
   totalPayment: number;
   totalInterest: number;
   amortizationData: AmortizationData[];
@@ -67,26 +56,19 @@ const pieChartConfig = {
 } satisfies ChartConfig;
 
 
-export default function PaymentCalculator() {
-  const [activeTab, setActiveTab] = useState("fixed-term");
-  const [fixedTermResult, setFixedTermResult] = useState<FixedTermResult | null>(null);
-  const [fixedPaymentResult, setFixedPaymentResult] = useState<FixedPaymentResult | null>(null);
+export default function SimpleLoanCalculator() {
+  const [result, setResult] = useState<LoanResult | null>(null);
   const [scheduleView, setScheduleView] = useState<'annual' | 'monthly'>('annual');
 
-  const fixedTermForm = useForm<z.infer<typeof fixedTermSchema>>({
-    resolver: zodResolver(fixedTermSchema),
-    defaultValues: { loanAmount: 200000, loanTermYears: 15, interestRate: 6 },
+  const form = useForm<z.infer<typeof loanSchema>>({
+    resolver: zodResolver(loanSchema),
+    defaultValues: { loanAmount: 200000, loanTermYears: 15, loanTermMonths: 0, interestRate: 6 },
   });
 
-  const fixedPaymentForm = useForm<z.infer<typeof fixedPaymentSchema>>({
-    resolver: zodResolver(fixedPaymentSchema),
-    defaultValues: { loanAmount: 200000, monthlyPayment: 1700, interestRate: 6 },
-  });
-
-  function onFixedTermSubmit(values: z.infer<typeof fixedTermSchema>) {
+  function onSubmit(values: z.infer<typeof loanSchema>) {
     const principal = values.loanAmount;
     const monthlyInterestRate = values.interestRate / 100 / 12;
-    const numberOfPayments = values.loanTermYears * 12;
+    const numberOfPayments = values.loanTermYears * 12 + values.loanTermMonths;
 
     if (numberOfPayments === 0) return;
 
@@ -110,61 +92,22 @@ export default function PaymentCalculator() {
         });
     }
 
-    setFixedTermResult({ monthlyPayment, totalPayment, totalInterest, amortizationData });
-    setFixedPaymentResult(null);
-  }
-
-  function onFixedPaymentSubmit(values: z.infer<typeof fixedPaymentSchema>) {
-    const principal = values.loanAmount;
-    const monthlyInterestRate = values.interestRate / 100 / 12;
-    const monthlyPayment = values.monthlyPayment;
-
-    if (monthlyPayment <= principal * monthlyInterestRate) {
-        // Handle case where payment doesn't cover interest
-        alert("Monthly payment is too low to cover interest. Loan will never be paid off.");
-        return;
-    }
-
-    const totalMonths = -(Math.log(1 - (principal * monthlyInterestRate) / monthlyPayment) / Math.log(1 + monthlyInterestRate));
-    const totalYears = Math.floor(totalMonths / 12);
-    const remainingMonths = Math.ceil(totalMonths % 12);
-
-    const totalPayment = monthlyPayment * Math.ceil(totalMonths);
-    const totalInterest = totalPayment - principal;
-
-    let balance = principal;
-    const amortizationData: AmortizationData[] = [];
-    for (let i = 0; i < Math.ceil(totalMonths); i++) {
-        const interestForMonth = balance * monthlyInterestRate;
-        const principalForMonth = monthlyPayment - interestForMonth;
-        balance -= principalForMonth;
-        if(balance < 0) {
-            const lastPrincipal = principalForMonth + balance;
-            balance = 0;
-             amortizationData.push({ year: Math.floor(i / 12) + 1, month: (i % 12) + 1, date: `Month ${i+1}`, interest: interestForMonth, principal: lastPrincipal, balance });
-            break;
-        }
-        amortizationData.push({ year: Math.floor(i / 12) + 1, month: (i % 12) + 1, date: `Month ${i+1}`, interest: interestForMonth, principal: principalForMonth, balance });
-    }
-
-    setFixedPaymentResult({ totalMonths: Math.ceil(totalMonths), totalYears, remainingMonths, totalPayment, totalInterest, amortizationData });
-    setFixedTermResult(null);
+    setResult({ monthlyPayment, totalPayment, totalInterest, amortizationData });
   }
   
-  const currentResult = activeTab === 'fixed-term' ? fixedTermResult : fixedPaymentResult;
-  const currentLoanAmount = activeTab === 'fixed-term' ? fixedTermForm.getValues('loanAmount') : fixedPaymentForm.getValues('loanAmount');
+  const loanAmount = form.getValues('loanAmount');
 
   const pieChartData = useMemo(() => {
-    if (!currentResult) return [];
+    if (!result) return [];
     return [
-        { name: 'Principal', value: currentLoanAmount, fill: 'hsl(var(--chart-1))' },
-        { name: 'Interest', value: currentResult.totalInterest, fill: 'hsl(var(--chart-2))' }
+        { name: 'Principal', value: loanAmount, fill: 'hsl(var(--chart-1))' },
+        { name: 'Interest', value: result.totalInterest, fill: 'hsl(var(--chart-2))' }
     ];
-  }, [currentResult, currentLoanAmount]);
+  }, [result, loanAmount]);
 
   const annualAmortization = useMemo(() => {
-    if (!currentResult) return [];
-    return currentResult.amortizationData.reduce((acc, curr) => {
+    if (!result) return [];
+    return result.amortizationData.reduce((acc, curr) => {
         const yearData = acc.find(d => d.year === curr.year);
         if (yearData) {
             yearData.interest += curr.interest;
@@ -175,7 +118,7 @@ export default function PaymentCalculator() {
         }
         return acc;
     }, [] as { year: number; interest: number; principal: number; balance: number }[]);
-  }, [currentResult]);
+  }, [result]);
 
   const growthChartData = useMemo(() => {
     if (!annualAmortization.length) return [];
@@ -198,7 +141,7 @@ export default function PaymentCalculator() {
   }
 
   const renderResults = () => {
-    if (!currentResult) {
+    if (!result) {
         return (
              <Card className="h-full flex flex-col justify-center items-center text-center p-6">
                  <CardHeader><CardTitle>Your Loan Details</CardTitle><CardDescription>Results will appear here after calculation.</CardDescription></CardHeader>
@@ -214,17 +157,9 @@ export default function PaymentCalculator() {
                 </CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-2">
-                        {fixedTermResult && (
-                             <div className="flex justify-between font-bold text-lg"><span>Monthly Payment</span><span className="text-primary">{formatCurrency(fixedTermResult.monthlyPayment)}</span></div>
-                        )}
-                        {fixedPaymentResult && (
-                            <div className="flex justify-between font-bold text-lg">
-                                <span>Payoff Time</span>
-                                <span className="text-primary">{fixedPaymentResult.totalYears} years, {fixedPaymentResult.remainingMonths} months</span>
-                            </div>
-                        )}
-                        <div className="flex justify-between text-sm"><span>Total of All Payments</span> <strong>{formatCurrency(currentResult.totalPayment)}</strong></div>
-                        <div className="flex justify-between text-sm"><span>Total Interest Paid</span> <strong>{formatCurrency(currentResult.totalInterest)}</strong></div>
+                         <div className="flex justify-between font-bold text-lg"><span>Monthly Payment</span><span className="text-primary">{formatCurrency(result.monthlyPayment)}</span></div>
+                        <div className="flex justify-between text-sm"><span>Total of {result.amortizationData.length} Payments</span> <strong>{formatCurrency(result.totalPayment)}</strong></div>
+                        <div className="flex justify-between text-sm"><span>Total Interest Paid</span> <strong>{formatCurrency(result.totalInterest)}</strong></div>
                     </div>
                     <ChartContainer config={pieChartConfig} className="mx-auto aspect-square h-56">
                         <ResponsiveContainer width="100%" height="100%">
@@ -240,7 +175,7 @@ export default function PaymentCalculator() {
                 </CardContent>
             </Card>
              <Card>
-                <CardHeader><CardTitle>Amortization Chart</CardTitle></CardHeader>
+                <CardHeader><CardTitle>Loan Balance Over Time</CardTitle></CardHeader>
                 <CardContent>
                      <ChartContainer config={{}} className="w-full h-80">
                         <ResponsiveContainer>
@@ -302,7 +237,7 @@ export default function PaymentCalculator() {
                                         </TableRow>
                                     ))
                                 ) : (
-                                    currentResult.amortizationData.map((row, index) => (
+                                    result.amortizationData.map((row, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{row.month}</TableCell>
                                             <TableCell className="text-right">{formatCurrency(row.principal)}</TableCell>
@@ -334,60 +269,33 @@ export default function PaymentCalculator() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         <div className="lg:col-span-2">
-             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="fixed-term">Fixed Term</TabsTrigger>
-                <TabsTrigger value="fixed-payment">Fixed Payments</TabsTrigger>
-              </TabsList>
-              <TabsContent value="fixed-term">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Calculate Monthly Payment</CardTitle>
-                    <CardDescription>Enter your loan details to find out your monthly payment.</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Form {...fixedTermForm}>
-                      <form onSubmit={fixedTermForm.handleSubmit(onFixedTermSubmit)} className="space-y-6">
-                        <FormField control={fixedTermForm.control} name="loanAmount" render={({ field }) => (
-                          <FormItem><FormLabel>Loan Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+            <Card>
+                <CardHeader>
+                <CardTitle>Loan Details</CardTitle>
+                <CardDescription>Enter your loan details to calculate your monthly payment.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField control={form.control} name="loanAmount" render={({ field }) => (
+                        <FormItem><FormLabel>Loan Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                    <div className="grid grid-cols-2 gap-4">
+                        <FormField control={form.control} name="loanTermYears" render={({ field }) => (
+                            <FormItem><FormLabel>Loan Term (Years)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
                         )} />
-                        <FormField control={fixedTermForm.control} name="loanTermYears" render={({ field }) => (
-                          <FormItem><FormLabel>Loan Term (Years)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                        <FormField control={form.control} name="loanTermMonths" render={({ field }) => (
+                            <FormItem><FormLabel>Loan Term (Months)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
                         )} />
-                         <FormField control={fixedTermForm.control} name="interestRate" render={({ field }) => (
-                          <FormItem><FormLabel>Interest Rate (% Annual)</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>
-                        )} />
-                        <Button type="submit" className="w-full">Calculate</Button>
-                      </form>
-                    </Form>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              <TabsContent value="fixed-payment">
-                 <Card>
-                  <CardHeader>
-                    <CardTitle>Calculate Loan Term</CardTitle>
-                    <CardDescription>Enter your desired monthly payment to find out how long it will take to pay off your loan.</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Form {...fixedPaymentForm}>
-                      <form onSubmit={fixedPaymentForm.handleSubmit(onFixedPaymentSubmit)} className="space-y-6">
-                        <FormField control={fixedPaymentForm.control} name="loanAmount" render={({ field }) => (
-                           <FormItem><FormLabel>Loan Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                        )} />
-                        <FormField control={fixedPaymentForm.control} name="monthlyPayment" render={({ field }) => (
-                           <FormItem><FormLabel>Monthly Payment</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                        )} />
-                         <FormField control={fixedPaymentForm.control} name="interestRate" render={({ field }) => (
-                           <FormItem><FormLabel>Interest Rate (% Annual)</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>
-                        )} />
-                        <Button type="submit" className="w-full">Calculate</Button>
-                      </form>
-                    </Form>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+                    </div>
+                        <FormField control={form.control} name="interestRate" render={({ field }) => (
+                        <FormItem><FormLabel>Interest Rate (% Annual)</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                    <Button type="submit" className="w-full">Calculate</Button>
+                    </form>
+                </Form>
+                </CardContent>
+            </Card>
         </div>
         <div className="lg:col-span-3">
             {renderResults()}
