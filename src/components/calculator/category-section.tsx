@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -38,6 +38,12 @@ const categories = [
         description: "Compound interest growth.",
         href: "/interest-calculator",
         icon: <BarChartBig className="h-8 w-8 text-primary" />,
+      },
+      {
+        title: "Retirement Calculator",
+        description: "Plan for your retirement.",
+        href: "/retirement-calculator",
+        icon: <UserRoundCheck className="h-8 w-8 text-primary" />,
       }
     ],
     placeholders: 0,
