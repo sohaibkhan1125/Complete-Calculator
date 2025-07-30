@@ -12,5 +12,7 @@ export {
     Calculator,
     Table,
     PiggyBank,
-    Receipt
+    Receipt,
+    Briefcase,
+    CircleDollarSign
 } from "lucide-react";
