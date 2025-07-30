@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -50,6 +50,12 @@ const categories = [
         description: "View your loan schedule.",
         href: "/amortization-calculator",
         icon: <Table className="h-8 w-8 text-primary" />,
+      },
+      {
+        title: "Inflation Calculator",
+        description: "Calculate purchasing power over time.",
+        href: "/inflation-calculator",
+        icon: <CircleDollarSign className="h-8 w-8 text-primary" />,
       }
     ],
     placeholders: 0,
