@@ -56,6 +56,12 @@ const categories = [
         description: "Calculate purchasing power over time.",
         href: "/inflation-calculator",
         icon: <CircleDollarSign className="h-8 w-8 text-primary" />,
+      },
+      {
+        title: "Finance Calculator",
+        description: "Solve for TVM variables.",
+        href: "/finance-calculator",
+        icon: <Calculator className="h-8 w-8 text-primary" />,
       }
     ],
     placeholders: 0,
