@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -20,6 +20,12 @@ const categories = [
         description: "Calculate different types of loans.",
         href: "/loan-calculator",
         icon: <Percent className="h-8 w-8 text-primary" />,
+      },
+      {
+        title: "Payment Calculator",
+        description: "Calculate payments and terms.",
+        href: "/payment-calculator",
+        icon: <Banknote className="h-8 w-8 text-primary" />,
       },
       {
         title: "Auto Loan Calculator",
