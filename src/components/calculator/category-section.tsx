@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -38,9 +38,15 @@ const categories = [
         description: "Plan for your retirement.",
         href: "/retirement-calculator",
         icon: <UserRoundCheck className="h-8 w-8 text-primary" />,
+      },
+      {
+        title: "Amortization Calculator",
+        description: "View your loan schedule.",
+        href: "/amortization-calculator",
+        icon: <Table className="h-8 w-8 text-primary" />,
       }
     ],
-    placeholders: 1,
+    placeholders: 0,
   },
   {
     title: "Fitness & Health Calculators",

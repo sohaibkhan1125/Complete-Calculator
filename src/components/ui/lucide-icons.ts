@@ -9,5 +9,6 @@ export {
     BarChartBig, 
     Banknote, 
     UserRoundCheck,
-    Calculator
+    Calculator,
+    Table,
 } from "lucide-react";
