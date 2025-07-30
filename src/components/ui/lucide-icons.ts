@@ -11,4 +11,5 @@ export {
     UserRoundCheck,
     Calculator,
     Table,
+    PiggyBank,
 } from "lucide-react";
