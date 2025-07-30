@@ -15,5 +15,6 @@ export {
     Receipt,
     Briefcase,
     CircleDollarSign,
-    TrendingUp
+    TrendingUp,
+    Scale
 } from "lucide-react";

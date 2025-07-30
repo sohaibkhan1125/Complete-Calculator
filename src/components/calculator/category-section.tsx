@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -99,8 +99,15 @@ const categories = [
   {
     title: "Fitness & Health Calculators",
     icon: <HeartPulse className="h-10 w-10 text-primary" />,
-    calculators: [],
-    placeholders: 4,
+    calculators: [
+        {
+            title: "BMI Calculator",
+            description: "Calculate your Body Mass Index.",
+            href: "/bmi-calculator",
+            icon: <Scale className="h-8 w-8 text-primary" />,
+        }
+    ],
+    placeholders: 3,
   },
   {
     title: "Math Calculators",
