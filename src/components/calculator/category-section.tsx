@@ -22,12 +22,6 @@ const categories = [
         icon: <Percent className="h-8 w-8 text-primary" />,
       },
       {
-        title: "Simple Loan Calculator",
-        description: "Calculate payments and terms for a simple loan.",
-        href: "/simple-loan-calculator",
-        icon: <Calculator className="h-8 w-8 text-primary" />,
-      },
-      {
         title: "Auto Loan Calculator",
         description: "Estimate your car payments.",
         href: "/auto-loan-calculator",
@@ -46,7 +40,7 @@ const categories = [
         icon: <UserRoundCheck className="h-8 w-8 text-primary" />,
       }
     ],
-    placeholders: 0,
+    placeholders: 1,
   },
   {
     title: "Fitness & Health Calculators",
