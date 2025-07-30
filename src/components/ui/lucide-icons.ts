@@ -17,5 +17,6 @@ export {
     CircleDollarSign,
     TrendingUp,
     Scale,
-    Utensils
+    Utensils,
+    PersonStanding
 } from "lucide-react";

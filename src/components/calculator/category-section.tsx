@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -111,9 +111,15 @@ const categories = [
             description: "Estimate your daily calorie needs.",
             href: "/calorie-calculator",
             icon: <Utensils className="h-8 w-8 text-primary" />,
-        }
+        },
+        {
+          title: "Body Fat Calculator",
+          description: "Estimate your total body fat.",
+          href: "/body-fat-calculator",
+          icon: <PersonStanding className="h-8 w-8 text-primary" />,
+      }
     ],
-    placeholders: 2,
+    placeholders: 1,
   },
   {
     title: "Math Calculators",
