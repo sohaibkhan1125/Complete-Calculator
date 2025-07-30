@@ -31,6 +31,7 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
+  type ChartConfig,
 } from "@/components/ui/chart"
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -75,7 +76,19 @@ type MortgageResult = {
   amortizationData: AmortizationData[];
 };
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = {
+  'Principal & Interest': 'hsl(var(--chart-1))',
+  'Property Tax': 'hsl(var(--chart-2))',
+  'Home Insurance': 'hsl(var(--chart-3))',
+  'Other': 'hsl(var(--chart-4))',
+};
+
+const chartConfig = {
+  'Principal & Interest': { label: 'P & I', color: COLORS['Principal & Interest'] },
+  'Property Tax': { label: 'Taxes', color: COLORS['Property Tax'] },
+  'Home Insurance': { label: 'Insurance', color: COLORS['Home Insurance'] },
+  'Other': { label: 'Other', color: COLORS['Other'] },
+} satisfies ChartConfig;
 
 export default function MortgageCalculator() {
   const [result, setResult] = useState<MortgageResult | null>(null);
@@ -186,10 +199,10 @@ export default function MortgageCalculator() {
   const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
 
   const pieChartData = result ? [
-      { name: 'Principal & Interest', value: result.monthlyPayment },
-      { name: 'Property Tax', value: result.monthlyPropertyTax },
-      { name: 'Home Insurance', value: result.monthlyHomeInsurance },
-      { name: 'Other', value: result.monthlyPmi + result.monthlyHoa + result.monthlyOtherCosts },
+      { name: 'Principal & Interest', value: result.monthlyPayment, fill: COLORS['Principal & Interest'] },
+      { name: 'Property Tax', value: result.monthlyPropertyTax, fill: COLORS['Property Tax'] },
+      { name: 'Home Insurance', value: result.monthlyHomeInsurance, fill: COLORS['Home Insurance'] },
+      { name: 'Other', value: result.monthlyPmi + result.monthlyHoa + result.monthlyOtherCosts, fill: COLORS['Other'] },
   ].filter(item => item.value > 0) : [];
   
 
@@ -403,15 +416,17 @@ export default function MortgageCalculator() {
                         <div>
                              <h3 className="text-lg font-semibold mb-4 text-center">Monthly Breakdown</h3>
                             <div className="w-full h-64">
+                            <ChartContainer config={chartConfig} className="mx-auto aspect-square h-full">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
-                                        <Pie data={pieChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8" label>
-                                            {pieChartData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+                                        <ChartTooltip content={<ChartTooltipContent nameKey="name" />} />
+                                        <Pie data={pieChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
+                                            {pieChartData.map((entry) => <Cell key={`cell-${entry.name}`} fill={entry.fill} />)}
                                         </Pie>
-                                        <ChartTooltip content={<ChartTooltipContent />} />
-                                        <ChartLegend content={<ChartLegendContent />} />
+                                        <ChartLegend content={<ChartLegendContent nameKey="name"/>} />
                                     </PieChart>
                                 </ResponsiveContainer>
+                            </ChartContainer>
                             </div>
                             <div className="space-y-2 mt-4 text-sm">
                                 <div className="flex justify-between"><span>Principal & Interest:</span> <strong>{formatCurrency(result.monthlyPayment)}</strong></div>
@@ -491,3 +506,5 @@ export default function MortgageCalculator() {
     </div>
   );
 }
+
+    
