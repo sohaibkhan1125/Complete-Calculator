@@ -24,6 +24,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronsUpDown } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
 
@@ -48,6 +49,7 @@ type CalculationResult = {
 
 const InterestRateCalculator = () => {
     const [result, setResult] = useState<CalculationResult | null>(null);
+    const { toast } = useToast();
 
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
@@ -88,10 +90,14 @@ const InterestRateCalculator = () => {
         const { loanAmount, loanTermYears, loanTermMonths, monthlyPayment } = values;
         const numberOfMonths = loanTermYears * 12 + loanTermMonths;
 
-        const calculatedRate = calculateRate(loanAmount, numberOfMonths, monthlyPayment / 100);
+        const calculatedRate = calculateRate(loanAmount, numberOfMonths, monthlyPayment);
 
         if (isNaN(calculatedRate)) {
-            // Handle error case, e.g., show a toast message
+            toast({
+                variant: "destructive",
+                title: "Calculation Error",
+                description: "The monthly payment is not sufficient to cover the loan amount over the specified term. Please increase the payment or extend the term.",
+            });
             setResult(null);
             console.error("Payment is not sufficient to cover the loan.");
             return;
