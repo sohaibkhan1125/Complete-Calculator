@@ -86,6 +86,12 @@ const categories = [
         description: "Convert salary between frequencies.",
         href: "/salary-calculator",
         icon: <Briefcase className="h-8 w-8 text-primary" />,
+      },
+      {
+        title: "Sales Tax Calculator",
+        description: "Compute tax-inclusive or exclusive prices.",
+        href: "/sales-tax-calculator",
+        icon: <Receipt className="h-8 w-8 text-primary" />,
       }
     ],
     placeholders: 0,
