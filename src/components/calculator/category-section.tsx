@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -62,6 +62,12 @@ const categories = [
         description: "Solve for TVM variables.",
         href: "/finance-calculator",
         icon: <Calculator className="h-8 w-8 text-primary" />,
+      },
+      {
+        title: "Income Tax Calculator",
+        description: "Estimate your federal tax refund or due.",
+        href: "/income-tax-calculator",
+        icon: <Receipt className="h-8 w-8 text-primary" />,
       }
     ],
     placeholders: 0,

@@ -12,4 +12,5 @@ export {
     Calculator,
     Table,
     PiggyBank,
+    Receipt
 } from "lucide-react";
