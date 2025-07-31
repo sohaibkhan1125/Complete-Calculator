@@ -27,5 +27,6 @@ export {
     Shuffle,
     Triangle,
     BarChartHorizontal,
-    Cake
+    Cake,
+    CalendarDays
 } from "lucide-react";
