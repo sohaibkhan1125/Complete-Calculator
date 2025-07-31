@@ -21,5 +21,6 @@ export {
     PersonStanding,
     BrainCircuit,
     Weight,
-    Footprints
+    Footprints,
+    Baby
 } from "lucide-react";
