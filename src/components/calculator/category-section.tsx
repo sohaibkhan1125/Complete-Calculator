@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake, CalendarDays, Clock, GraduationCap, HardHat, Network, Lock } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake, CalendarDays, Clock, GraduationCap, HardHat, Network, Lock, Ruler } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -257,6 +257,12 @@ const categories = [
             description: "Create secure, random passwords.",
             href: "/password-generator",
             icon: <Lock className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "Unit Converter",
+            description: "Convert between various units of measurement.",
+            href: "/unit-converter",
+            icon: <Ruler className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,
