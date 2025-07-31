@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -190,6 +190,12 @@ const categories = [
             description: "Solve for triangle angles and sides.",
             href: "/triangle-calculator",
             icon: <Triangle className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "Standard Deviation Calculator",
+            description: "Calculate standard deviation and variance.",
+            href: "/standard-deviation-calculator",
+            icon: <BarChartHorizontal className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,

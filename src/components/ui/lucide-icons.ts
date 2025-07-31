@@ -23,5 +23,8 @@ export {
     Weight,
     Footprints,
     Baby,
-    Divide
+    Divide,
+    Shuffle,
+    Triangle,
+    BarChartHorizontal
 } from "lucide-react";
