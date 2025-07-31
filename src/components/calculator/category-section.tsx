@@ -160,8 +160,15 @@ const categories = [
   {
     title: "Math Calculators",
     icon: <Sigma className="h-10 w-10 text-primary" />,
-    calculators: [],
-    placeholders: 2,
+    calculators: [
+        {
+            title: "Scientific Calculator",
+            description: "Perform advanced mathematical calculations.",
+            href: "/scientific-calculator",
+            icon: <Calculator className="h-8 w-8 text-primary" />,
+        }
+    ],
+    placeholders: 1,
   },
   {
     title: "Other Calculators",
