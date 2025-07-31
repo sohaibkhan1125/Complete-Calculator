@@ -221,6 +221,12 @@ const categories = [
             description: "Add, subtract, and calculate durations.",
             href: "/time-calculator",
             icon: <Clock className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "ORS / Hours Calculator",
+            description: "Calculate duration between times or dates.",
+            href: "/ors-calculator",
+            icon: <Clock className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,
