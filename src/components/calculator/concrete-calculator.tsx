@@ -75,6 +75,10 @@ const stairsSchema = z.object({
     thickness: z.coerce.number().min(0), // For landing pad
 });
 
+const unitSchema = z.object({
+  unitSystem: z.enum(["metric", "imperial"]),
+});
+
 
 // --- Result Display Component ---
 const ResultDisplay = ({ result, unit }: { result: { volume: number; weight: number } | null, unit: UnitSystem }) => {
@@ -238,9 +242,18 @@ const ConcreteCalculator = () => {
   const [columnResult, setColumnResult] = useState(null);
   const [tubeResult, setTubeResult] = useState(null);
   const [stairsResult, setStairsResult] = useState(null);
+  
+  const unitForm = useForm<z.infer<typeof unitSchema>>({
+    resolver: zodResolver(unitSchema),
+    defaultValues: {
+      unitSystem: "imperial",
+    },
+  });
 
   const handleUnitChange = (value: string) => {
-    setUnitSystem(value as UnitSystem);
+    const newUnitSystem = value as UnitSystem;
+    setUnitSystem(newUnitSystem);
+    unitForm.setValue("unitSystem", newUnitSystem);
     setSlabResult(null);
     setColumnResult(null);
     setTubeResult(null);
@@ -253,10 +266,38 @@ const ConcreteCalculator = () => {
             <CardTitle>Concrete Calculator</CardTitle>
             <div className="flex justify-between items-center">
                 <CardDescription>Estimate concrete needed for various shapes.</CardDescription>
-                 <RadioGroup defaultValue={unitSystem} onValueChange={handleUnitChange} className="flex space-x-4">
-                    <FormItem className="flex items-center space-x-2"><FormControl><RadioGroupItem value="imperial" /></FormControl><FormLabel className="font-normal">Imperial</FormLabel></FormItem>
-                    <FormItem className="flex items-center space-x-2"><FormControl><RadioGroupItem value="metric" /></FormControl><FormLabel className="font-normal">Metric</FormLabel></FormItem>
-                 </RadioGroup>
+                <Form {...unitForm}>
+                  <form>
+                     <FormField
+                      control={unitForm.control}
+                      name="unitSystem"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <RadioGroup
+                              onValueChange={handleUnitChange}
+                              defaultValue={field.value}
+                              className="flex space-x-4"
+                            >
+                              <FormItem className="flex items-center space-x-2">
+                                <FormControl>
+                                  <RadioGroupItem value="imperial" />
+                                </FormControl>
+                                <FormLabel className="font-normal">Imperial</FormLabel>
+                              </FormItem>
+                              <FormItem className="flex items-center space-x-2">
+                                <FormControl>
+                                  <RadioGroupItem value="metric" />
+                                </FormControl>
+                                <FormLabel className="font-normal">Metric</FormLabel>
+                              </FormItem>
+                            </RadioGroup>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </form>
+                </Form>
             </div>
         </CardHeader>
         <CardContent>
