@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake, CalendarDays, Clock, GraduationCap } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake, CalendarDays, Clock, GraduationCap, HardHat } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -239,6 +239,12 @@ const categories = [
             description: "Calculate your course grade.",
             href: "/grade-calculator",
             icon: <GraduationCap className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "Concrete Calculator",
+            description: "Estimate concrete for slabs, footings, and stairs.",
+            href: "/concrete-calculator",
+            icon: <HardHat className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,
