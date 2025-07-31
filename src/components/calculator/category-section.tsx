@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -178,6 +178,12 @@ const categories = [
             description: "Calculate percentages, changes, and differences.",
             href: "/percentage-calculator",
             icon: <Percent className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "Random Number Generator",
+            description: "Generate random integers or decimals.",
+            href: "/random-number-generator",
+            icon: <Shuffle className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,
