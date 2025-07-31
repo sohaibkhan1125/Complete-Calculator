@@ -172,6 +172,12 @@ const categories = [
             description: "Add, subtract, multiply, and divide fractions.",
             href: "/fraction-calculator",
             icon: <Divide className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "Percentage Calculator",
+            description: "Calculate percentages, changes, and differences.",
+            href: "/percentage-calculator",
+            icon: <Percent className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,
