@@ -147,6 +147,12 @@ const categories = [
           description: "Estimate your date of conception.",
           href: "/pregnancy-conception-calculator",
           icon: <Baby className="h-8 w-8 text-primary" />,
+        },
+        {
+          title: "Due Date Calculator",
+          description: "Estimate your baby's due date.",
+          href: "/due-date-calculator",
+          icon: <Baby className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,
