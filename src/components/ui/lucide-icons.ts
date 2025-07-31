@@ -28,5 +28,6 @@ export {
     Triangle,
     BarChartHorizontal,
     Cake,
-    CalendarDays
+    CalendarDays,
+    Clock
 } from "lucide-react";

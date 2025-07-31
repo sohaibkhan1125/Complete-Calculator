@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake, CalendarDays } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake, CalendarDays, Clock } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -215,9 +215,15 @@ const categories = [
             description: "Find duration between dates or add/subtract dates.",
             href: "/date-calculator",
             icon: <CalendarDays className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "Time Calculator",
+            description: "Add, subtract, and calculate durations.",
+            href: "/time-calculator",
+            icon: <Clock className="h-8 w-8 text-primary" />,
         }
     ],
-    placeholders: 1,
+    placeholders: 0,
   },
 ];
 
