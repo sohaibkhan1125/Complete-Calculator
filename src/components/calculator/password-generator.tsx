@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect, useCallback } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -63,44 +63,44 @@ const PasswordGenerator = () => {
         },
     });
 
-    const settings = form.watch();
-
-    const generatePassword = () => {
+    const generatePassword = useCallback((values: FormData) => {
         let charset = "";
-        if (settings.uppercase) charset += charsets.uppercase;
-        if (settings.lowercase) charset += charsets.lowercase;
-        if (settings.numbers) charset += charsets.numbers;
-        if (settings.symbols) charset += charsets.symbols;
+        if (values.uppercase) charset += charsets.uppercase;
+        if (values.lowercase) charset += charsets.lowercase;
+        if (values.numbers) charset += charsets.numbers;
+        if (values.symbols) charset += charsets.symbols;
 
-        if (settings.excludeSimilar) {
+        if (values.excludeSimilar) {
             charset = charset.split('').filter(c => !charsets.similar.includes(c)).join('');
         }
-        if (settings.excludeAmbiguous) {
+        if (values.excludeAmbiguous) {
             charset = charset.split('').filter(c => !charsets.ambiguous.includes(c)).join('');
         }
         
         if (charset.length === 0) {
             setPassword("");
+            setEntropy(0);
             return;
         }
 
         let newPassword = "";
-        for (let i = 0; i < settings.length; i++) {
+        for (let i = 0; i < values.length; i++) {
             const randomIndex = Math.floor(Math.random() * charset.length);
             newPassword += charset[randomIndex];
         }
         
         setPassword(newPassword);
 
-        // Calculate entropy
         const poolSize = charset.length;
-        const passwordEntropy = settings.length * Math.log2(poolSize);
+        const passwordEntropy = values.length * Math.log2(poolSize);
         setEntropy(passwordEntropy);
-    };
+    }, []);
 
+    const watchedSettings = useWatch({ control: form.control });
+    
     useEffect(() => {
-        generatePassword();
-    }, [settings]);
+        generatePassword(watchedSettings);
+    }, [watchedSettings, generatePassword]);
 
 
     const copyPassword = () => {
@@ -131,7 +131,7 @@ const PasswordGenerator = () => {
                             <form className="space-y-6">
                                 <div className="space-y-2">
                                      <div className="flex justify-between items-center mb-4">
-                                        <FormLabel>Password Length: {settings.length}</FormLabel>
+                                        <FormLabel>Password Length: {form.getValues('length')}</FormLabel>
                                          <FormField name="length" control={form.control} render={({ field }) => (
                                              <FormControl>
                                                  <Slider
@@ -170,7 +170,7 @@ const PasswordGenerator = () => {
                             />
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2">
                                 <Button variant="ghost" size="icon" onClick={copyPassword} aria-label="Copy Password"><Copy className="h-5 w-5"/></Button>
-                                <Button variant="ghost" size="icon" onClick={generatePassword} aria-label="Regenerate Password"><RefreshCw className="h-5 w-5"/></Button>
+                                <Button variant="ghost" size="icon" onClick={() => generatePassword(form.getValues())} aria-label="Regenerate Password"><RefreshCw className="h-5 w-5"/></Button>
                             </div>
                         </div>
                         <div className="mt-4 flex justify-between text-sm">
