@@ -19,5 +19,6 @@ export {
     Scale,
     Utensils,
     PersonStanding,
-    BrainCircuit
+    BrainCircuit,
+    Weight
 } from "lucide-react";
