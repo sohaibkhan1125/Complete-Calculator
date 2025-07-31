@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -166,9 +166,15 @@ const categories = [
             description: "Perform advanced mathematical calculations.",
             href: "/scientific-calculator",
             icon: <Calculator className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "Fraction Calculator",
+            description: "Add, subtract, multiply, and divide fractions.",
+            href: "/fraction-calculator",
+            icon: <Divide className="h-8 w-8 text-primary" />,
         }
     ],
-    placeholders: 1,
+    placeholders: 0,
   },
   {
     title: "Other Calculators",

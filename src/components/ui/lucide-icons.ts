@@ -22,5 +22,6 @@ export {
     BrainCircuit,
     Weight,
     Footprints,
-    Baby
+    Baby,
+    Divide
 } from "lucide-react";
