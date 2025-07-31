@@ -28,11 +28,17 @@ const AdvancedScientificCalculator = () => {
     const toDegrees = (radians: number) => radians * (180 / Math.PI);
 
     const handleInput = (value: string) => {
-        setExpression(prev => prev + value);
-        if (display === "0" && !("+-*/^".includes(value))) {
+        if (display === "Error" || display === "Infinity" || display === "-Infinity" || display === "NaN") {
             setDisplay(value);
+            setExpression(value);
+            return;
+        }
+        if (display === "0" && !("+-*/^.").includes(value)) {
+            setDisplay(value);
+            setExpression(value);
         } else {
             setDisplay(prev => prev + value);
+            setExpression(prev => prev + value);
         }
     };
     
@@ -41,15 +47,9 @@ const AdvancedScientificCalculator = () => {
             let evalExpression = expression
                 .replace(/π/g, 'Math.PI')
                 .replace(/e/g, 'Math.E')
-                .replace(/\^/g, '**')
-                // Handle trig functions with deg/rad
-                .replace(/sin\(([^)]+)\)/g, (match, p1) => `Math.sin(${isDeg ? toRadians(parseFloat(p1)) : p1})`)
-                .replace(/cos\(([^)]+)\)/g, (match, p1) => `Math.cos(${isDeg ? toRadians(parseFloat(p1)) : p1})`)
-                .replace(/tan\(([^)]+)\)/g, (match, p1) => `Math.tan(${isDeg ? toRadians(parseFloat(p1)) : p1})`)
-                .replace(/sqrt\(([^)]+)\)/g, 'Math.sqrt($1)')
-                .replace(/log\(([^)]+)\)/g, 'Math.log10($1)')
-                .replace(/ln\(([^)]+)\)/g, 'Math.log($1)');
+                .replace(/\^/g, '**');
 
+            // More robust evaluation
             const result = new Function('return ' + evalExpression)();
             if (isNaN(result) || !isFinite(result)) {
                 throw new Error("Invalid calculation");
@@ -63,7 +63,16 @@ const AdvancedScientificCalculator = () => {
     };
     
     const handleFunction = (func: string) => {
-        let currentVal = parseFloat(display);
+        let currentVal: number;
+        try {
+            // Try to evaluate the current expression before applying the function
+            currentVal = new Function('return ' + expression.replace(/π/g, 'Math.PI').replace(/e/g, 'Math.E').replace(/\^/g, '**'))();
+        } catch (e) {
+            setDisplay("Error");
+            setExpression("");
+            return;
+        }
+
         if (isNaN(currentVal)) {
             setDisplay("Error");
             setExpression("");
@@ -96,8 +105,9 @@ const AdvancedScientificCalculator = () => {
             setDisplay("Error");
             setExpression("");
         } else {
-            setDisplay(String(result));
-            setExpression(String(result));
+            const resultString = String(result);
+            setDisplay(resultString);
+            setExpression(resultString);
         }
     }
 
