@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -169,8 +170,22 @@ export default function TimeCalculator() {
                 <FormField name="op" control={addSubtractForm.control} render={({ field }) => (
                   <FormItem className="flex justify-center">
                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex space-x-2">
-                      <FormItem><FormControl><RadioGroupItem value="add" className="hidden" /><FormLabel><Button type="button" variant={field.value === 'add' ? 'default' : 'outline'} size="icon"><Plus /></Button></FormLabel></FormControl></FormItem>
-                      <FormItem><FormControl><RadioGroupItem value="subtract" className="hidden" /><FormLabel><Button type="button" variant={field.value === 'subtract' ? 'default' : 'outline'} size="icon"><Minus/></Button></FormLabel></FormControl></FormItem>
+                      <FormItem>
+                        <FormControl><RadioGroupItem value="add" className="hidden" /></FormControl>
+                        <FormLabel>
+                          <Button type="button" variant={field.value === 'add' ? 'default' : 'outline'} size="icon" asChild>
+                             <span><Plus /></span>
+                          </Button>
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem>
+                        <FormControl><RadioGroupItem value="subtract" className="hidden" /></FormControl>
+                        <FormLabel>
+                          <Button type="button" variant={field.value === 'subtract' ? 'default' : 'outline'} size="icon" asChild>
+                            <span><Minus/></span>
+                          </Button>
+                        </FormLabel>
+                      </FormItem>
                     </RadioGroup>
                   </FormItem>
                 )} />
@@ -206,8 +221,22 @@ export default function TimeCalculator() {
                  <FormField name="op" control={dateMathForm.control} render={({ field }) => (
                   <FormItem className="flex justify-center">
                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex space-x-2">
-                      <FormItem><FormControl><RadioGroupItem value="add" className="hidden" /><FormLabel><Button type="button" variant={field.value === 'add' ? 'default' : 'outline'} size="icon"><Plus /></Button></FormLabel></FormControl></FormItem>
-                      <FormItem><FormControl><RadioGroupItem value="subtract" className="hidden" /><FormLabel><Button type="button" variant={field.value === 'subtract' ? 'default' : 'outline'} size="icon"><Minus/></Button></FormLabel></FormControl></FormItem>
+                      <FormItem>
+                        <FormControl><RadioGroupItem value="add" className="hidden" /></FormControl>
+                        <FormLabel>
+                           <Button type="button" variant={field.value === 'add' ? 'default' : 'outline'} size="icon" asChild>
+                             <span><Plus /></span>
+                          </Button>
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem>
+                        <FormControl><RadioGroupItem value="subtract" className="hidden" /></FormControl>
+                        <FormLabel>
+                           <Button type="button" variant={field.value === 'subtract' ? 'default' : 'outline'} size="icon" asChild>
+                             <span><Minus /></span>
+                          </Button>
+                        </FormLabel>
+                      </FormItem>
                     </RadioGroup>
                   </FormItem>
                 )} />
