@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -203,8 +203,15 @@ const categories = [
   {
     title: "Other Calculators",
     icon: <AppWindow className="h-10 w-10 text-primary" />,
-    calculators: [],
-    placeholders: 3,
+    calculators: [
+        {
+            title: "Age Calculator",
+            description: "Calculate age in various time units.",
+            href: "/age-calculator",
+            icon: <Cake className="h-8 w-8 text-primary" />,
+        }
+    ],
+    placeholders: 2,
   },
 ];
 

@@ -26,5 +26,6 @@ export {
     Divide,
     Shuffle,
     Triangle,
-    BarChartHorizontal
+    BarChartHorizontal,
+    Cake
 } from "lucide-react";
