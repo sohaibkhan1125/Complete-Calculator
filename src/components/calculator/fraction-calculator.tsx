@@ -12,6 +12,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Plus, Minus, X, Divide, Equal } from 'lucide-react';
 
+// Helper function to check if a string can be a BigInt
+const isBigInt = (value: string) => {
+    try {
+        BigInt(value);
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
+
 // Helper functions for fraction math
 const gcd = (a: bigint, b: bigint): bigint => {
     return b === 0n ? a : gcd(b, a % b);
@@ -37,16 +47,16 @@ const toMixed = (num: bigint, den: bigint): { whole: bigint, num: bigint, den: b
 
 // Zod Schemas
 const basicSchema = z.object({
-    num1: z.string().refine(val => !isNaN(BigInt(val)), { message: "Invalid number" }),
-    den1: z.string().refine(val => !isNaN(BigInt(val)) && BigInt(val) !== 0n, { message: "Non-zero number required" }),
+    num1: z.string().refine(isBigInt, { message: "Invalid number" }),
+    den1: z.string().refine(val => isBigInt(val) && BigInt(val) !== 0n, { message: "Non-zero number required" }),
     op: z.enum(['+', '-', '*', '/']),
-    num2: z.string().refine(val => !isNaN(BigInt(val)), { message: "Invalid number" }),
-    den2: z.string().refine(val => !isNaN(BigInt(val)) && BigInt(val) !== 0n, { message: "Non-zero number required" }),
+    num2: z.string().refine(isBigInt, { message: "Invalid number" }),
+    den2: z.string().refine(val => isBigInt(val) && BigInt(val) !== 0n, { message: "Non-zero number required" }),
 });
 
 const simplifySchema = z.object({
-    num: z.string().refine(val => !isNaN(BigInt(val)), { message: "Invalid number" }),
-    den: z.string().refine(val => !isNaN(BigInt(val)) && BigInt(val) !== 0n, { message: "Non-zero number required" }),
+    num: z.string().refine(isBigInt, { message: "Invalid number" }),
+    den: z.string().refine(val => isBigInt(val) && BigInt(val) !== 0n, { message: "Non-zero number required" }),
 });
 
 const decimalToFractionSchema = z.object({
@@ -54,8 +64,8 @@ const decimalToFractionSchema = z.object({
 });
 
 const fractionToDecimalSchema = z.object({
-    num: z.string().refine(val => !isNaN(BigInt(val)), { message: "Invalid number" }),
-    den: z.string().refine(val => !isNaN(BigInt(val)) && BigInt(val) !== 0n, { message: "Non-zero number required" }),
+    num: z.string().refine(isBigInt, { message: "Invalid number" }),
+    den: z.string().refine(val => isBigInt(val) && BigInt(val) !== 0n, { message: "Non-zero number required" }),
 });
 
 
@@ -99,10 +109,10 @@ const FractionInput = ({ control, nameNum, nameDen }: { control: any, nameNum: s
 const FractionCalculator = () => {
     const [result, setResult] = useState<string | null>(null);
 
-    const basicForm = useForm<z.infer<typeof basicSchema>>({ resolver: zodResolver(basicSchema), defaultValues: { op: '+' } });
-    const simplifyForm = useForm<z.infer<typeof simplifySchema>>({ resolver: zodResolver(simplifySchema) });
-    const decToFracForm = useForm<z.infer<typeof decimalToFractionSchema>>({ resolver: zodResolver(decimalToFractionSchema) });
-    const fracToDecForm = useForm<z.infer<typeof fractionToDecimalSchema>>({ resolver: zodResolver(fractionToDecimalSchema) });
+    const basicForm = useForm<z.infer<typeof basicSchema>>({ resolver: zodResolver(basicSchema), defaultValues: { op: '+', num1: '', den1: '', num2: '', den2: '' } });
+    const simplifyForm = useForm<z.infer<typeof simplifySchema>>({ resolver: zodResolver(simplifySchema), defaultValues: { num: '', den: '' } });
+    const decToFracForm = useForm<z.infer<typeof decimalToFractionSchema>>({ resolver: zodResolver(decimalToFractionSchema), defaultValues: { decimal: '' } });
+    const fracToDecForm = useForm<z.infer<typeof fractionToDecimalSchema>>({ resolver: zodResolver(fractionToDecimalSchema), defaultValues: { num: '', den: '' } });
 
     const onBasicSubmit = (data: z.infer<typeof basicSchema>) => {
         try {
