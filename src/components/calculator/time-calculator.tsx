@@ -70,8 +70,27 @@ export default function TimeCalculator() {
   const [dateMathResult, setDateMathResult] = useState<string | null>(null);
   const [expressionResult, setExpressionResult] = useState<string | null>(null);
 
-  const addSubtractForm = useForm<z.infer<typeof timeAddSubtractSchema>>({ resolver: zodResolver(timeAddSubtractSchema), defaultValues: timeAddSubtractSchema.parse({}) });
-  const dateMathForm = useForm<z.infer<typeof dateMathSchema>>({ resolver: zodResolver(dateMathSchema), defaultValues: { ...dateMathSchema.parse({}), startDate: new Date() }});
+  const addSubtractForm = useForm<z.infer<typeof timeAddSubtractSchema>>({ 
+    resolver: zodResolver(timeAddSubtractSchema), 
+    defaultValues: {
+      op: "add", days1: 0, hours1: 0, minutes1: 0, seconds1: 0,
+      days2: 0, hours2: 0, minutes2: 0, seconds2: 0,
+    } 
+  });
+  const dateMathForm = useForm<z.infer<typeof dateMathSchema>>({ 
+      resolver: zodResolver(dateMathSchema), 
+      defaultValues: {
+        op: "add",
+        startDate: new Date(),
+        startHours: 0,
+        startMinutes: 0,
+        startSeconds: 0,
+        diffDays: 0,
+        diffHours: 0,
+        diffMinutes: 0,
+        diffSeconds: 0,
+      }
+  });
   const expressionForm = useForm<z.infer<typeof expressionSchema>>({ resolver: zodResolver(expressionSchema), defaultValues: { expression: "" }});
   
   const onAddSubtractSubmit = (data: z.infer<typeof timeAddSubtractSchema>) => {
