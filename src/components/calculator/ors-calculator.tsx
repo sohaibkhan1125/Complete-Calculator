@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Clock, SwapHorizontal } from "lucide-react";
+import { CalendarIcon, Clock, ArrowLeftRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Schemas
@@ -200,7 +200,7 @@ export default function OrsCalculator() {
                 <form onSubmit={sameDayForm.handleSubmit(onSameDaySubmit)} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4">
                     <TimeInput form={sameDayForm} type="start" />
-                    <Button type="button" variant="ghost" size="icon" onClick={() => swapTimes(sameDayForm)} className="self-end"><SwapHorizontal/></Button>
+                    <Button type="button" variant="ghost" size="icon" onClick={() => swapTimes(sameDayForm)} className="self-end"><ArrowLeftRight/></Button>
                     <TimeInput form={sameDayForm} type="end" />
                   </div>
                    <div className="flex flex-col sm:flex-row gap-2">
