@@ -223,7 +223,7 @@ const categories = [
             icon: <Clock className="h-8 w-8 text-primary" />,
         },
         {
-            title: "ORS / Hours Calculator",
+            title: "Hours Calculator",
             description: "Calculate duration between times or dates.",
             href: "/ors-calculator",
             icon: <Clock className="h-8 w-8 text-primary" />,
