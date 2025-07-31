@@ -29,5 +29,6 @@ export {
     BarChartHorizontal,
     Cake,
     CalendarDays,
-    Clock
+    Clock,
+    GraduationCap
 } from "lucide-react";

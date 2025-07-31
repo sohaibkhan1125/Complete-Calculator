@@ -1,5 +1,5 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake, CalendarDays, Clock } from "lucide-react";
+import { Landmark, HeartPulse, Sigma, AppWindow, Home, Percent, Car, BarChartBig, Banknote, UserRoundCheck, Calculator, Table, PiggyBank, CircleDollarSign, Receipt, Briefcase, TrendingUp, Scale, Utensils, PersonStanding, BrainCircuit, Weight, Footprints, Baby, Divide, Shuffle, Triangle, BarChartHorizontal, Cake, CalendarDays, Clock, GraduationCap } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from 'next/link';
 import React from 'react';
@@ -227,6 +227,12 @@ const categories = [
             description: "Calculate duration between times or dates.",
             href: "/ors-calculator",
             icon: <Clock className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "GPA Calculator",
+            description: "Calculate your Grade Point Average.",
+            href: "/gpa-calculator",
+            icon: <GraduationCap className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,
