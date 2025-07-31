@@ -10,13 +10,14 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -171,19 +172,21 @@ export default function TimeCalculator() {
                   <FormItem className="flex justify-center">
                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex space-x-2">
                       <FormItem>
-                        <FormControl><RadioGroupItem value="add" className="hidden" /></FormControl>
-                        <FormLabel>
-                          <Button type="button" variant={field.value === 'add' ? 'default' : 'outline'} size="icon" asChild>
-                             <span><Plus /></span>
-                          </Button>
+                        <FormControl>
+                            <RadioGroupItem value="add" id="add-op" className="sr-only peer" />
+                        </FormControl>
+                        <FormLabel htmlFor="add-op" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10", 
+                            field.value === 'add' ? 'bg-primary text-primary-foreground' : 'bg-transparent border border-input')}>
+                           <Plus />
                         </FormLabel>
                       </FormItem>
                       <FormItem>
-                        <FormControl><RadioGroupItem value="subtract" className="hidden" /></FormControl>
-                        <FormLabel>
-                          <Button type="button" variant={field.value === 'subtract' ? 'default' : 'outline'} size="icon" asChild>
-                            <span><Minus/></span>
-                          </Button>
+                         <FormControl>
+                            <RadioGroupItem value="subtract" id="subtract-op" className="sr-only peer" />
+                        </FormControl>
+                         <FormLabel htmlFor="subtract-op" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10", 
+                            field.value === 'subtract' ? 'bg-primary text-primary-foreground' : 'bg-transparent border border-input')}>
+                            <Minus/>
                         </FormLabel>
                       </FormItem>
                     </RadioGroup>
@@ -221,20 +224,22 @@ export default function TimeCalculator() {
                  <FormField name="op" control={dateMathForm.control} render={({ field }) => (
                   <FormItem className="flex justify-center">
                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex space-x-2">
-                      <FormItem>
-                        <FormControl><RadioGroupItem value="add" className="hidden" /></FormControl>
-                        <FormLabel>
-                           <Button type="button" variant={field.value === 'add' ? 'default' : 'outline'} size="icon" asChild>
-                             <span><Plus /></span>
-                          </Button>
+                       <FormItem>
+                        <FormControl>
+                            <RadioGroupItem value="add" id="date-add-op" className="sr-only peer" />
+                        </FormControl>
+                        <FormLabel htmlFor="date-add-op" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10", 
+                            field.value === 'add' ? 'bg-primary text-primary-foreground' : 'bg-transparent border border-input')}>
+                           <Plus />
                         </FormLabel>
                       </FormItem>
                       <FormItem>
-                        <FormControl><RadioGroupItem value="subtract" className="hidden" /></FormControl>
-                        <FormLabel>
-                           <Button type="button" variant={field.value === 'subtract' ? 'default' : 'outline'} size="icon" asChild>
-                             <span><Minus /></span>
-                          </Button>
+                         <FormControl>
+                            <RadioGroupItem value="subtract" id="date-subtract-op" className="sr-only peer" />
+                        </FormControl>
+                         <FormLabel htmlFor="date-subtract-op" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10", 
+                            field.value === 'subtract' ? 'bg-primary text-primary-foreground' : 'bg-transparent border border-input')}>
+                            <Minus/>
                         </FormLabel>
                       </FormItem>
                     </RadioGroup>
@@ -261,7 +266,7 @@ export default function TimeCalculator() {
                  <FormField name="expression" control={expressionForm.control} render={({ field }) => (
                     <FormItem>
                         <FormLabel>Time Expression</FormLabel>
-                        <FormControl><Input placeholder="e.g., 1d 2h + 5m 30s - 12h" {...field} /></FormControl>
+                        <FormControl><Input placeholder="e.g., 1d 2h + 5m 30s - 2030s + 28h" {...field} /></FormControl>
                         <FormDescription>Use 'd', 'h', 'm', 's'. Only + and - are supported.</FormDescription>
                         <FormMessage />
                     </FormItem>
