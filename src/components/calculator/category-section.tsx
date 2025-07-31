@@ -225,13 +225,19 @@ const categories = [
         {
             title: "Hours Calculator",
             description: "Calculate duration between times or dates.",
-            href: "/ors-calculator",
+            href: "/hours-calculator",
             icon: <Clock className="h-8 w-8 text-primary" />,
         },
         {
             title: "GPA Calculator",
             description: "Calculate your Grade Point Average.",
             href: "/gpa-calculator",
+            icon: <GraduationCap className="h-8 w-8 text-primary" />,
+        },
+        {
+            title: "Grade Calculator",
+            description: "Calculate your course grade.",
+            href: "/grade-calculator",
             icon: <GraduationCap className="h-8 w-8 text-primary" />,
         }
     ],
