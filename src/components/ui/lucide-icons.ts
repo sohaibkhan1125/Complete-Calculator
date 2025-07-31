@@ -20,5 +20,6 @@ export {
     Utensils,
     PersonStanding,
     BrainCircuit,
-    Weight
+    Weight,
+    Footprints
 } from "lucide-react";
