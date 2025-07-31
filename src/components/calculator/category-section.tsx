@@ -141,6 +141,12 @@ const categories = [
           description: "Estimate your pregnancy timeline.",
           href: "/pregnancy-calculator",
           icon: <Baby className="h-8 w-8 text-primary" />,
+        },
+        {
+          title: "Pregnancy Conception Calculator",
+          description: "Estimate your date of conception.",
+          href: "/pregnancy-conception-calculator",
+          icon: <Baby className="h-8 w-8 text-primary" />,
         }
     ],
     placeholders: 0,
