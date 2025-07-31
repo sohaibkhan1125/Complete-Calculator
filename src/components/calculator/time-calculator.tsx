@@ -20,7 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Clock, Plus, Minus } from "lucide-react";
+import { CalendarIcon, Plus, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Schemas
@@ -187,11 +187,14 @@ export default function TimeCalculator() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField name="startDate" control={dateMathForm.control} render={({ field }) => (
                     <FormItem><FormLabel>Start Date</FormLabel>
-                      <Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant="outline" className={cn(!field.value && "text-muted-foreground", "w-full")}>
-                          {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus /></PopoverContent></Popover>
+                      <Popover><PopoverTrigger asChild>
+                        <FormControl>
+                            <Button variant="outline" className={cn(!field.value && "text-muted-foreground", "w-full justify-start text-left font-normal")}>
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                            </Button>
+                        </FormControl>
+                      </PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus /></PopoverContent></Popover>
                     </FormItem>
                   )} />
                    <div className="grid grid-cols-3 gap-2">
@@ -244,3 +247,4 @@ export default function TimeCalculator() {
     </Card>
   );
 }
+    
