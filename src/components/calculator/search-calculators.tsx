@@ -5,7 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const SearchCalculators = () => {
+interface SearchCalculatorsProps {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}
+
+const SearchCalculators = ({ searchQuery, setSearchQuery }: SearchCalculatorsProps) => {
   return (
     <Card>
       <CardHeader>
@@ -13,7 +18,12 @@ const SearchCalculators = () => {
       </CardHeader>
       <CardContent>
         <div className="flex w-full items-center space-x-2">
-          <Input type="text" placeholder="Search calculators..." />
+          <Input 
+            type="text" 
+            placeholder="Search calculators..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <Button type="submit" size="icon" aria-label="Search">
             <Search className="h-4 w-4" />
           </Button>

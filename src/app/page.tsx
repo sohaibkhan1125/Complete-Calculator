@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from 'react';
 import Navbar from '@/components/layout/navbar';
 import Footer from '@/components/layout/footer';
 import ScientificCalculator from '@/components/calculator/scientific-calculator';
@@ -6,6 +9,8 @@ import SearchCalculators from '@/components/calculator/search-calculators';
 import CategorySection from '@/components/calculator/category-section';
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState('');
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -16,10 +21,10 @@ export default function Home() {
           </div>
           <div className="lg:col-span-2 space-y-8">
             <AiCalculator />
-            <SearchCalculators />
+            <SearchCalculators searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           </div>
         </div>
-        <CategorySection />
+        <CategorySection searchQuery={searchQuery} />
       </main>
       <Footer />
     </div>

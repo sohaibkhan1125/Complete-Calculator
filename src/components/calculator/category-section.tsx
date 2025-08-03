@@ -269,14 +269,25 @@ const categories = [
   },
 ];
 
-const CategorySection = () => {
+interface CategorySectionProps {
+  searchQuery: string;
+}
+
+const CategorySection = ({ searchQuery }: CategorySectionProps) => {
+  const filteredCategories = categories.map(category => ({
+    ...category,
+    calculators: category.calculators.filter(calculator =>
+      calculator.title.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  })).filter(category => category.calculators.length > 0);
+
   return (
     <section className="mt-16">
       <h2 className="text-3xl font-bold text-center mb-8 font-headline">
         Calculator Categories
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-        {categories.map((category) => (
+        {filteredCategories.map((category) => (
           <Card key={category.title} className="flex flex-col">
             <CardContent className="p-6 flex-grow">
               <div className="flex flex-col items-center text-center">
