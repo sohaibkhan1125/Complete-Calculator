@@ -103,14 +103,16 @@ const SalaryCalculator = () => {
 
         const adjustedHourly = totalWorkHoursPerYear > 0 ? annualSalary / totalWorkHoursPerYear : 0;
         const adjustedDaily = totalWorkDaysPerYear > 0 ? annualSalary / totalWorkDaysPerYear : 0;
-        const adjustedWeekly = totalWorkDaysPerYear > 0 ? adjustedDaily * values.daysPerWeek : 0;
+        
+        const adjustedWeekly = adjustedDaily * values.daysPerWeek;
+        const adjustedAnnual = adjustedWeekly * 52;
 
         const adjusted = {
-            annual: annualSalary,
-            quarterly: annualSalary / 4,
-            monthly: annualSalary / 12,
-            semiMonthly: annualSalary / 24,
-            biWeekly: (adjustedWeekly * 52) / 26,
+            annual: adjustedAnnual,
+            quarterly: adjustedAnnual / 4,
+            monthly: adjustedAnnual / 12,
+            semiMonthly: adjustedAnnual / 24,
+            biWeekly: adjustedAnnual / 26,
             weekly: adjustedWeekly,
             daily: adjustedDaily,
             hourly: adjustedHourly,
